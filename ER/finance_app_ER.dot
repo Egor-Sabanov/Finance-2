@@ -1,0 +1,86 @@
+digraph G {
+  graph [rankdir=LR, bgcolor="#0B1018", pad=0.3, nodesep=0.55, ranksep=1.0, splines=ortho];
+  node [shape=plain, fontname="Arial"];
+  edge [color="#7F8EA8", penwidth=1.4, arrowsize=0.7];
+
+  users [label=<
+  <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#121A27">
+   <TR><TD COLSPAN="2" BGCOLOR="#2D4A86"><FONT COLOR="white"><B>users</B></FONT></TD></TR>
+   <TR><TD ALIGN="LEFT"><FONT COLOR="#8FE3FF">PK</FONT> id</TD><TD ALIGN="LEFT">BIGINT</TD></TR>
+   <TR><TD ALIGN="LEFT">full_name</TD><TD ALIGN="LEFT">VARCHAR</TD></TR>
+   <TR><TD ALIGN="LEFT">email</TD><TD ALIGN="LEFT">VARCHAR UNIQUE</TD></TR>
+   <TR><TD ALIGN="LEFT">password_hash</TD><TD ALIGN="LEFT">VARCHAR</TD></TR>
+   <TR><TD ALIGN="LEFT">created_at / updated_at</TD><TD ALIGN="LEFT">TIMESTAMP</TD></TR>
+  </TABLE>>];
+
+  categories [label=<
+  <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#121A27">
+   <TR><TD COLSPAN="2" BGCOLOR="#2D4A86"><FONT COLOR="white"><B>categories</B></FONT></TD></TR>
+   <TR><TD ALIGN="LEFT"><FONT COLOR="#8FE3FF">PK</FONT> id</TD><TD ALIGN="LEFT">BIGINT</TD></TR>
+   <TR><TD ALIGN="LEFT"><FONT COLOR="#8FE3FF">FK</FONT> user_id</TD><TD ALIGN="LEFT">BIGINT NULL</TD></TR>
+   <TR><TD ALIGN="LEFT">name</TD><TD ALIGN="LEFT">VARCHAR</TD></TR>
+   <TR><TD ALIGN="LEFT">type</TD><TD ALIGN="LEFT">ENUM</TD></TR>
+  </TABLE>>];
+
+  transactions [label=<
+  <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#121A27">
+   <TR><TD COLSPAN="2" BGCOLOR="#2D4A86"><FONT COLOR="white"><B>transactions</B></FONT></TD></TR>
+   <TR><TD ALIGN="LEFT"><FONT COLOR="#8FE3FF">PK</FONT> id</TD><TD ALIGN="LEFT">BIGINT</TD></TR>
+   <TR><TD ALIGN="LEFT"><FONT COLOR="#8FE3FF">FK</FONT> user_id</TD><TD ALIGN="LEFT">BIGINT</TD></TR>
+   <TR><TD ALIGN="LEFT"><FONT COLOR="#8FE3FF">FK</FONT> category_id</TD><TD ALIGN="LEFT">BIGINT</TD></TR>
+   <TR><TD ALIGN="LEFT"><FONT COLOR="#8FE3FF">FK</FONT> import_batch_id</TD><TD ALIGN="LEFT">BIGINT NULL</TD></TR>
+   <TR><TD ALIGN="LEFT">type / amount</TD><TD ALIGN="LEFT">ENUM / DECIMAL</TD></TR>
+   <TR><TD ALIGN="LEFT">transaction_date</TD><TD ALIGN="LEFT">DATE</TD></TR>
+   <TR><TD ALIGN="LEFT">description / source</TD><TD ALIGN="LEFT">VARCHAR / ENUM</TD></TR>
+  </TABLE>>];
+
+  import_batches [label=<
+  <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#121A27">
+   <TR><TD COLSPAN="2" BGCOLOR="#2D4A86"><FONT COLOR="white"><B>import_batches</B></FONT></TD></TR>
+   <TR><TD ALIGN="LEFT"><FONT COLOR="#8FE3FF">PK</FONT> id</TD><TD ALIGN="LEFT">BIGINT</TD></TR>
+   <TR><TD ALIGN="LEFT"><FONT COLOR="#8FE3FF">FK</FONT> user_id</TD><TD ALIGN="LEFT">BIGINT</TD></TR>
+   <TR><TD ALIGN="LEFT">file_name / file_hash</TD><TD ALIGN="LEFT">VARCHAR / CHAR</TD></TR>
+   <TR><TD ALIGN="LEFT">status</TD><TD ALIGN="LEFT">ENUM</TD></TR>
+   <TR><TD ALIGN="LEFT">rows_total / imported / skipped</TD><TD ALIGN="LEFT">INT</TD></TR>
+  </TABLE>>];
+
+  budgets [label=<
+  <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#121A27">
+   <TR><TD COLSPAN="2" BGCOLOR="#2D4A86"><FONT COLOR="white"><B>budgets</B></FONT></TD></TR>
+   <TR><TD ALIGN="LEFT"><FONT COLOR="#8FE3FF">PK</FONT> id</TD><TD ALIGN="LEFT">BIGINT</TD></TR>
+   <TR><TD ALIGN="LEFT"><FONT COLOR="#8FE3FF">FK</FONT> user_id</TD><TD ALIGN="LEFT">BIGINT</TD></TR>
+   <TR><TD ALIGN="LEFT">year / month</TD><TD ALIGN="LEFT">SMALLINT / TINYINT</TD></TR>
+   <TR><TD ALIGN="LEFT">amount</TD><TD ALIGN="LEFT">DECIMAL</TD></TR>
+  </TABLE>>];
+
+  budget_limits [label=<
+  <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#121A27">
+   <TR><TD COLSPAN="2" BGCOLOR="#2D4A86"><FONT COLOR="white"><B>budget_limits</B></FONT></TD></TR>
+   <TR><TD ALIGN="LEFT"><FONT COLOR="#8FE3FF">PK</FONT> id</TD><TD ALIGN="LEFT">BIGINT</TD></TR>
+   <TR><TD ALIGN="LEFT"><FONT COLOR="#8FE3FF">FK</FONT> budget_id</TD><TD ALIGN="LEFT">BIGINT</TD></TR>
+   <TR><TD ALIGN="LEFT"><FONT COLOR="#8FE3FF">FK</FONT> category_id</TD><TD ALIGN="LEFT">BIGINT</TD></TR>
+   <TR><TD ALIGN="LEFT">limit_amount</TD><TD ALIGN="LEFT">DECIMAL</TD></TR>
+   <TR><TD ALIGN="LEFT">warning_percent</TD><TD ALIGN="LEFT">TINYINT</TD></TR>
+  </TABLE>>];
+
+  notifications [label=<
+  <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#121A27">
+   <TR><TD COLSPAN="2" BGCOLOR="#2D4A86"><FONT COLOR="white"><B>notifications</B></FONT></TD></TR>
+   <TR><TD ALIGN="LEFT"><FONT COLOR="#8FE3FF">PK</FONT> id</TD><TD ALIGN="LEFT">BIGINT</TD></TR>
+   <TR><TD ALIGN="LEFT"><FONT COLOR="#8FE3FF">FK</FONT> user_id</TD><TD ALIGN="LEFT">BIGINT</TD></TR>
+   <TR><TD ALIGN="LEFT"><FONT COLOR="#8FE3FF">FK</FONT> budget_limit_id</TD><TD ALIGN="LEFT">BIGINT NULL</TD></TR>
+   <TR><TD ALIGN="LEFT">type / title</TD><TD ALIGN="LEFT">ENUM / VARCHAR</TD></TR>
+   <TR><TD ALIGN="LEFT">message / is_read</TD><TD ALIGN="LEFT">VARCHAR / BOOLEAN</TD></TR>
+  </TABLE>>];
+
+  users -> categories [label="1 : N"];
+  users -> transactions [label="1 : N"];
+  users -> import_batches [label="1 : N"];
+  users -> budgets [label="1 : N"];
+  users -> notifications [label="1 : N"];
+  categories -> transactions [label="1 : N"];
+  import_batches -> transactions [label="1 : N"];
+  budgets -> budget_limits [label="1 : N"];
+  categories -> budget_limits [label="1 : N"];
+  budget_limits -> notifications [label="1 : N"];
+}

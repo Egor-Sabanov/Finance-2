@@ -1,0 +1,180 @@
+# Веб-приложение для учета финансов и личного бюджета
+
+**Автор:** Сабанов Егор Олегович  
+**Этап:** первая контрольная точка — проектирование и подготовка БД
+
+## 1. Описание проекта
+
+«Личный финансовый помощник» — будущая веб-система для учета доходов и расходов, планирования бюджета и анализа финансового состояния пользователя.
+
+Основные возможности будущей версии:
+- категории доходов и расходов;
+- ручное добавление и редактирование финансовых операций;
+- импорт банковских выписок в CSV;
+- планирование общего бюджета на месяц;
+- лимиты по отдельным категориям;
+- уведомления о приближении к лимиту и о его превышении;
+- отчеты и диаграммы по финансовым данным;
+- безопасная авторизация пользователя;
+- React-клиент, PHP REST API и MySQL.
+
+На первой контрольной точке реализуется именно проектная основа: анализ предметной области, черновик ТЗ, ER-диаграмма, SQL-схема с тестовыми данными и Git-репозиторий.
+
+## 2. Структура репозитория
+
+```text
+finance-assistant-control-point/
+├── analysis/                # анализ предметной области и черновик ТЗ
+├── ER/                      # редактируемая ER-схема + PNG + Mermaid
+├── database/                # SQL-схема, тестовые INSERT и проверочные запросы
+├── docs/                    # инструкции по установке и проверке
+├── report/                  # отчет по первой контрольной точке
+├── screenshots/             # подтверждение Git и структуры проекта
+├── backend/                 # минимальная проверка подключения PHP → MySQL
+├── frontend/                # место для дальнейшей реализации React-клиента
+├── .gitignore
+└── README.md
+```
+
+## 3. Требуемое ПО
+
+Для текущей контрольной точки достаточно:
+- Windows 10/11;
+- XAMPP (Apache + MySQL/MariaDB + phpMyAdmin);
+- Git;
+- любой редактор кода (например, VS Code);
+- diagrams.net / draw.io — для редактирования ER-диаграммы.
+
+Для следующего этапа разработки интерфейса понадобится Node.js LTS и npm.
+
+## 4. Установка БД через XAMPP и phpMyAdmin
+
+1. Установить XAMPP.
+2. Запустить **Apache** и **MySQL** в XAMPP Control Panel.
+3. Открыть `http://localhost/phpmyadmin/`.
+4. Перейти на вкладку **Импорт**.
+5. Выбрать `database/install.sql`.
+6. Нажать **Импорт**.
+7. В левой части phpMyAdmin должна появиться база `finance_app`.
+8. Открыть базу и убедиться, что созданы таблицы:
+   - `users`
+   - `categories`
+   - `transactions`
+   - `import_batches`
+   - `budgets`
+   - `budget_limits`
+   - `notifications`
+
+Файл `database/install.sql` создает структуру и сразу добавляет тестовые данные.
+
+## 5. Проверка тестовых данных
+
+После импорта открыть phpMyAdmin → `finance_app` → выполнить запрос:
+
+```sql
+SELECT COUNT(*) AS users_count FROM users;
+SELECT COUNT(*) AS categories_count FROM categories;
+SELECT COUNT(*) AS transactions_count FROM transactions;
+SELECT COUNT(*) AS import_batches_count FROM import_batches;
+SELECT COUNT(*) AS budgets_count FROM budgets;
+SELECT COUNT(*) AS budget_limits_count FROM budget_limits;
+SELECT COUNT(*) AS notifications_count FROM notifications;
+```
+
+Ожидаются ненулевые значения по всем таблицам.
+
+Подробная проверка находится в `database/verify.sql`.
+
+## 6. Проверка PHP → MySQL
+
+Скопировать проект, например, в:
+
+```text
+C:\xampp\htdocs\finance-assistant-control-point\
+```
+
+Открыть:
+
+```text
+http://localhost/finance-assistant-control-point/backend/public/health.php
+```
+
+При корректном подключении будет JSON со статусом `ok` и именем базы `finance_app`.
+
+Если root-пользователь XAMPP использует другой пароль, значения подключения задаются в `backend/config.php` (локально) на основе `backend/config.example.php`.
+
+## 7. Как открыть редактируемую ER-диаграмму
+
+Файл:
+
+```text
+ER/finance_app_ER.drawio
+```
+
+Открывается через https://app.diagrams.net/ или настольный draw.io/diagrams.net.
+
+Дополнительно есть `ER/finance_app_ER.mmd` — Mermaid-исходник диаграммы и `ER/finance_app_ER.png` — готовое изображение для отчета.
+
+## 8. Git
+
+Репозиторий уже инициализирован локально и содержит несколько осмысленных коммитов. Проверить:
+
+```bash
+git log --oneline --decorate --graph --all
+```
+
+Пример ожидаемой истории в этом комплекте:
+
+```text
+* docs: add control point report
+* db: add verification queries and install script
+* db: align SQL schema with finance_app ER model
+* docs: add analysis, draft TЗ and project guide
+* init: create finance assistant control point
+```
+
+Для подтверждения в папке `screenshots/` находится `git_log.png` и текстовый `git_log.txt`.
+
+## 9. Публикация на GitHub
+
+Создать **пустой** репозиторий на GitHub без README, `.gitignore` и лицензии, затем выполнить:
+
+```bash
+git remote add origin https://github.com/ВАШ_USERNAME/finance-assistant.git
+git remote -v
+git push -u origin main
+```
+
+Если история коммитов уже создана локально, `push` отправит ее в GitHub вместе с коммитами. Подробная инструкция с GitHub CLI и обычным Git находится в `docs/02_GitHub.md`.
+
+## 10. Текущая контрольная точка
+
+Проверяемые результаты:
+
+1. анализ предметной области;
+2. черновик ТЗ;
+3. ER-диаграмма в редактируемом формате;
+4. SQL-скрипт создания БД `finance_app`;
+5. тестовые `INSERT`;
+6. Git-репозиторий с несколькими коммитами;
+7. README с инструкцией по установке и запуску.
+
+## 11. Важно
+
+Текущая версия не называется полностью готовой бизнес-системой: это корректно оформленная проектная основа первой контрольной точки. Реализация полноценного React-интерфейса, REST API, CSV-импорта, отчетов, уведомлений и деплоя выполняется на последующих этапах проекта.
+## 12. Реализованный этап — регистрация и авторизация
+
+Текущий этап проекта включает рабочую регистрацию и авторизацию пользователя.
+
+Реализовано:
+- HTML5/CSS3 страницы `frontend/register.php` и `frontend/login.php`;
+- серверная валидация в PHP;
+- хеширование паролей через `password_hash()`;
+- проверка через `password_verify()`;
+- PDO prepared statements без эмуляции;
+- защита HTML-форм от CSRF;
+- сессии и `session_regenerate_id()` после входа;
+- личный кабинет и выход;
+- JSON API для будущего React-клиента.
+
+Подробная инструкция находится в `docs/03_Авторизация_установка_и_проверка.md`.

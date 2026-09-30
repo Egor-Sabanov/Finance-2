@@ -1,0 +1,83 @@
+erDiagram
+    USERS ||--o{ CATEGORIES : owns
+    USERS ||--o{ TRANSACTIONS : creates
+    USERS ||--o{ IMPORT_BATCHES : uploads
+    USERS ||--o{ BUDGETS : plans
+    BUDGETS ||--o{ BUDGET_LIMITS : contains
+    CATEGORIES ||--o{ TRANSACTIONS : classifies
+    CATEGORIES ||--o{ BUDGET_LIMITS : limits
+    IMPORT_BATCHES ||--o{ TRANSACTIONS : imports
+    USERS ||--o{ NOTIFICATIONS : receives
+    BUDGET_LIMITS ||--o{ NOTIFICATIONS : triggers
+
+    USERS {
+        bigint id PK
+        varchar full_name
+        varchar email UK
+        varchar password_hash
+        timestamp created_at
+        timestamp updated_at
+    }
+    CATEGORIES {
+        bigint id PK
+        bigint user_id FK
+        varchar name
+        enum type
+        char color
+        varchar icon
+        timestamp created_at
+    }
+    TRANSACTIONS {
+        bigint id PK
+        bigint user_id FK
+        bigint category_id FK
+        bigint import_batch_id FK
+        enum type
+        decimal amount
+        date transaction_date
+        varchar description
+        varchar external_id
+        enum source
+        timestamp created_at
+    }
+    IMPORT_BATCHES {
+        bigint id PK
+        bigint user_id FK
+        varchar file_name
+        char file_hash UK
+        enum status
+        int rows_total
+        int rows_imported
+        int rows_skipped
+        text error_message
+        timestamp created_at
+        timestamp completed_at
+    }
+    BUDGETS {
+        bigint id PK
+        bigint user_id FK
+        smallint year
+        tinyint month
+        decimal amount
+        timestamp created_at
+        timestamp updated_at
+    }
+    BUDGET_LIMITS {
+        bigint id PK
+        bigint budget_id FK
+        bigint category_id FK
+        decimal limit_amount
+        tinyint warning_percent
+        timestamp created_at
+    }
+    NOTIFICATIONS {
+        bigint id PK
+        bigint user_id FK
+        bigint budget_limit_id FK
+        enum type
+        varchar title
+        varchar message
+        boolean is_read
+        timestamp created_at
+        timestamp read_at
+    }

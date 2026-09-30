@@ -1,0 +1,10 @@
+* 4f270b5 (HEAD -> main) feat: expose csrf token endpoint for api client
+* b40d6d1 chore: add project entry point
+* 07dc592 feat: add working registration and authentication
+* c54c34f chore: keep local submission evidence out of source tree
+* a5d0848 docs: add git evidence and corrected control point report
+* 15e2122 docs: add first control point report
+* 30f70c5 docs: add editable ER model and diagram exports
+* d39c175 db: align finance_app schema and add test data
+* 998d905 docs: add analysis draft requirements and setup guides
+* 70d4e43 init: create finance assistant control point
