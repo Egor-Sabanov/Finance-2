@@ -17,20 +17,15 @@ $user = require_auth();
     <div class="logo"><div class="logo-mark">₽</div>FinanceAssistant</div>
     <nav>
       <a class="active" href="dashboard.php">Главная</a>
-      <a href="#">Операции</a>
-      <a href="#">Категории</a>
-      <a href="#">Бюджет</a>
-      <a href="#">Импорт CSV</a>
-      <a href="#">Отчёты</a>
-      <a href="#">Уведомления</a>
-      <a href="#">Настройки</a>
+      <a href="transactions.php">Операции</a>
+      <?php if (($user['role'] ?? 'user') === 'admin'): ?><a href="admin-transactions.php">Администрирование</a><?php endif; ?>
     </nav>
   </aside>
   <main class="main">
     <div class="topbar">
       <div>
         <h1>Привет, <?= e($user['full_name']) ?> 👋</h1>
-        <p>Это рабочая авторизация первой реализации проекта.</p>
+        <p>Личный кабинет · роль: <?= ($user['role'] ?? 'user') === 'admin' ? 'администратор' : 'пользователь' ?></p>
       </div>
       <div class="profile">
         <div class="avatar"><?= e(mb_strtoupper(mb_substr($user['full_name'], 0, 1))) ?></div>
@@ -41,6 +36,12 @@ $user = require_auth();
       <article class="stat"><div class="label">Аккаунт</div><div class="value ok">Активен</div></article>
       <article class="stat"><div class="label">Email</div><div class="value" style="font-size:20px"><?= e($user['email']) ?></div></article>
       <article class="stat"><div class="label">Зарегистрирован</div><div class="value" style="font-size:20px"><?= e(date('d.m.Y H:i', strtotime($user['created_at']))) ?></div></article>
+    </section>
+    <section class="panel">
+      <h2>Финансовые операции</h2>
+      <p>Просматривайте операции, ищите по описанию и категории и отбирайте записи по датам и типу.</p>
+      <a class="action-link" href="transactions.php">Открыть список операций →</a>
+      <?php if (($user['role'] ?? 'user') === 'admin'): ?><a class="action-link" href="admin-transactions.php">Открыть список всех записей →</a><?php endif; ?>
     </section>
   </main>
 </div>

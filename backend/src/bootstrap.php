@@ -82,7 +82,7 @@ function current_user(): ?array
         return null;
     }
 
-    $stmt = db()->prepare('SELECT id, full_name, email, created_at FROM users WHERE id = :id LIMIT 1');
+    $stmt = db()->prepare('SELECT id, full_name, email, role, created_at FROM users WHERE id = :id LIMIT 1');
     $stmt->execute(['id' => (int)$id]);
     $user = $stmt->fetch() ?: null;
 
@@ -108,6 +108,16 @@ function require_auth(): array
         set_flash('error', 'Сначала войдите в систему.');
         header('Location: login.php');
         exit;
+    }
+    return $user;
+}
+
+function require_admin(): array
+{
+    $user = require_auth();
+    if (($user['role'] ?? 'user') !== 'admin') {
+        http_response_code(403);
+        exit('Доступ запрещён. Эта страница доступна только администратору.');
     }
     return $user;
 }
