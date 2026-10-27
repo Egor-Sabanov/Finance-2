@@ -1,9 +1,9 @@
 USE finance_app;
 
 -- Тестовый пароль для всех demo-пользователей: Demo123!
-INSERT INTO users (id, full_name, email, password_hash) VALUES
-(1, 'Алексей Иванов', 'alexey.demo@example.com', '$2y$12$ZgQQmc3YpGRoqqtjShjCg.r62Hr7HhUU1DELk8EKVDntQNysoX9jS'),
-(2, 'Егор Сабанов', 'egor.demo@example.com', '$2y$12$ZgQQmc3YpGRoqqtjShjCg.r62Hr7HhUU1DELk8EKVDntQNysoX9jS');
+INSERT INTO users (id, full_name, email, password_hash, role) VALUES
+(1, 'Алексей Иванов', 'alexey.demo@example.com', '$2y$12$ZgQQmc3YpGRoqqtjShjCg.r62Hr7HhUU1DELk8EKVDntQNysoX9jS', 'user'),
+(2, 'Егор Сабанов', 'egor.demo@example.com', '$2y$12$ZgQQmc3YpGRoqqtjShjCg.r62Hr7HhUU1DELk8EKVDntQNysoX9jS', 'admin');
 
 INSERT INTO categories (id, user_id, name, type, color, icon) VALUES
 (1, 1, 'Зарплата', 'income', '#35C77A', 'salary'),
