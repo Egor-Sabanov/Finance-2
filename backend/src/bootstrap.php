@@ -82,12 +82,13 @@ function current_user(): ?array
         return null;
     }
 
-    $stmt = db()->prepare('SELECT id, full_name, email, role, created_at FROM users WHERE id = :id LIMIT 1');
+    $stmt = db()->prepare('SELECT id, full_name, email, role, is_active, created_at FROM users WHERE id = :id LIMIT 1');
     $stmt->execute(['id' => (int)$id]);
     $user = $stmt->fetch() ?: null;
 
-    if ($user === null) {
+    if ($user === null || !(bool)$user['is_active']) {
         unset($_SESSION['user_id']);
+        $user = null;
     }
 
     return $user;

@@ -23,20 +23,20 @@ INSERT INTO categories (id, user_id, name, type, color, icon) VALUES
 INSERT INTO import_batches (id, user_id, file_name, file_hash, status, rows_total, rows_imported, rows_skipped, completed_at) VALUES
 (1, 2, 'bank_statement_2026_09.csv', SHA2('demo-bank-statement-2026-09', 256), 'processed', 5, 5, 0, CURRENT_TIMESTAMP);
 
-INSERT INTO transactions (id, user_id, category_id, import_batch_id, type, amount, transaction_date, description, external_id, source) VALUES
-(1, 1, 1, NULL, 'income', 80000.00, '2026-09-01', 'Заработная плата', 'MAN-0001', 'manual'),
-(2, 1, 2, NULL, 'income', 15000.00, '2026-09-10', 'Фриланс-проект', 'MAN-0002', 'manual'),
-(3, 1, 3, NULL, 'expense', 12500.00, '2026-09-03', 'Покупки продуктов', 'MAN-0003', 'manual'),
-(4, 1, 4, NULL, 'expense', 3500.00, '2026-09-05', 'Транспорт', 'MAN-0004', 'manual'),
-(5, 1, 5, NULL, 'expense', 10000.00, '2026-09-06', 'Аренда', 'MAN-0005', 'manual'),
-(6, 1, 6, NULL, 'expense', 2500.00, '2026-09-12', 'Кино и досуг', 'MAN-0006', 'manual'),
-(7, 2, 7, NULL, 'income', 90000.00, '2026-09-01', 'Заработная плата', 'MAN-1001', 'manual'),
-(8, 2, 8, NULL, 'income', 12000.00, '2026-09-15', 'Фриланс', 'MAN-1002', 'manual'),
-(9, 2, 9, 1, 'expense', 14790.00, '2026-09-02', 'Банк: супермаркет', 'BANK-001', 'csv'),
-(10, 2, 10, 1, 'expense', 3200.00, '2026-09-04', 'Банк: транспорт', 'BANK-002', 'csv'),
-(11, 2, 11, 1, 'expense', 18000.00, '2026-09-05', 'Банк: аренда', 'BANK-003', 'csv'),
-(12, 2, 12, 1, 'expense', 2400.00, '2026-09-07', 'Банк: развлечения', 'BANK-004', 'csv'),
-(13, 2, 13, 1, 'expense', 950.00, '2026-09-09', 'Банк: аптека', 'BANK-005', 'csv');
+INSERT INTO transactions (id, user_id, category_id, import_batch_id, type, amount, transaction_date, description, external_id, source, status) VALUES
+(1, 1, 1, NULL, 'income', 80000.00, '2026-09-01', 'Заработная плата', 'MAN-0001', 'manual', 'completed'),
+(2, 1, 2, NULL, 'income', 15000.00, '2026-09-10', 'Фриланс-проект', 'MAN-0002', 'manual', 'planned'),
+(3, 1, 3, NULL, 'expense', 12500.00, '2026-09-03', 'Покупки продуктов', 'MAN-0003', 'manual', 'completed'),
+(4, 1, 4, NULL, 'expense', 3500.00, '2026-09-05', 'Транспорт', 'MAN-0004', 'manual', 'completed'),
+(5, 1, 5, NULL, 'expense', 10000.00, '2026-09-06', 'Аренда', 'MAN-0005', 'manual', 'planned'),
+(6, 1, 6, NULL, 'expense', 2500.00, '2026-09-12', 'Кино и досуг', 'MAN-0006', 'manual', 'cancelled'),
+(7, 2, 7, NULL, 'income', 90000.00, '2026-09-01', 'Заработная плата', 'MAN-1001', 'manual', 'completed'),
+(8, 2, 8, NULL, 'income', 12000.00, '2026-09-15', 'Фриланс', 'MAN-1002', 'manual', 'planned'),
+(9, 2, 9, 1, 'expense', 14790.00, '2026-09-02', 'Банк: супермаркет', 'BANK-001', 'csv', 'completed'),
+(10, 2, 10, 1, 'expense', 3200.00, '2026-09-04', 'Банк: транспорт', 'BANK-002', 'csv', 'completed'),
+(11, 2, 11, 1, 'expense', 18000.00, '2026-09-05', 'Банк: аренда', 'BANK-003', 'csv', 'completed'),
+(12, 2, 12, 1, 'expense', 2400.00, '2026-09-07', 'Банк: развлечения', 'BANK-004', 'csv', 'completed'),
+(13, 2, 13, 1, 'expense', 950.00, '2026-09-09', 'Банк: аптека', 'BANK-005', 'csv', 'completed');
 
 INSERT INTO budgets (id, user_id, year, month, amount) VALUES
 (1, 1, 2026, 9, 50000.00),

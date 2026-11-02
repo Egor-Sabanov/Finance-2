@@ -15,6 +15,7 @@ SELECT
     u.email,
     c.name AS category,
     t.type,
+    t.status,
     t.amount,
     t.transaction_date,
     t.source
@@ -22,6 +23,16 @@ FROM transactions t
 JOIN users u ON u.id = t.user_id
 JOIN categories c ON c.id = t.category_id
 ORDER BY t.id;
+
+SELECT role, is_active, COUNT(*) AS user_count
+FROM users
+GROUP BY role, is_active
+ORDER BY role, is_active;
+
+SELECT status, COUNT(*) AS transaction_count, SUM(amount) AS amount_total
+FROM transactions
+GROUP BY status
+ORDER BY status;
 
 SELECT
     b.year,

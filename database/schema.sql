@@ -10,6 +10,7 @@ CREATE TABLE users (
     email VARCHAR(255) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
     role ENUM('user', 'admin') NOT NULL DEFAULT 'user',
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
@@ -59,6 +60,7 @@ CREATE TABLE transactions (
     description VARCHAR(255) NULL,
     external_id VARCHAR(100) NULL,
     source ENUM('manual', 'csv') NOT NULL DEFAULT 'manual',
+    status ENUM('planned', 'completed', 'cancelled') NOT NULL DEFAULT 'completed',
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_transactions_user
         FOREIGN KEY (user_id) REFERENCES users(id)
@@ -74,6 +76,7 @@ CREATE TABLE transactions (
         ON UPDATE CASCADE,
     CONSTRAINT chk_transactions_amount CHECK (amount > 0),
     INDEX idx_transactions_user_date (user_id, transaction_date),
+    INDEX idx_transactions_status_date (status, transaction_date),
     INDEX idx_transactions_category_date (category_id, transaction_date),
     INDEX idx_transactions_import_batch (import_batch_id),
     INDEX idx_transactions_external_id (external_id)

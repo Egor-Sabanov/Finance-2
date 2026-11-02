@@ -95,6 +95,12 @@ table { width:100%; border-collapse:collapse; min-width:700px; }
 th, td { padding:12px 10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
 th { color:var(--muted); font-size:13px; }
 .empty { color:var(--muted); text-align:center; padding:28px; }
+.pagination { display:flex; justify-content:center; align-items:center; gap:20px; padding-top:18px; color:var(--muted); }
+.pagination a, th a { color:#b6b0ff; text-decoration:none; }
+.pagination a { padding:8px 12px; border:1px solid var(--line); border-radius:9px; }
+.user-actions { display:flex; flex-wrap:wrap; align-items:center; gap:6px; }
+.user-actions select, td select { padding:7px 9px; color:var(--text); background:var(--panel-2); border:1px solid var(--line); border-radius:8px; }
+td button { padding:7px 9px; color:var(--text); background:#202944; border:1px solid var(--line); border-radius:8px; cursor:pointer; }
 .detail-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
 .detail-grid .stat .value { font-size:20px; overflow-wrap:anywhere; }
 @media (max-width: 600px) { .filters { grid-template-columns:1fr; } .filter-actions { align-items:stretch; flex-direction:column; } }

@@ -16,12 +16,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (!$errors) {
-        $stmt = db()->prepare('SELECT id, full_name, email, password_hash FROM users WHERE email = :email LIMIT 1');
+        $stmt = db()->prepare('SELECT id, full_name, email, password_hash, is_active FROM users WHERE email = :email LIMIT 1');
         $stmt->execute(['email' => $email]);
         $user = $stmt->fetch();
 
         if (!$user || !password_verify($password, $user['password_hash'])) {
             $errors[] = 'Неверный email или пароль.';
+        } elseif (!(bool)$user['is_active']) {
+            $errors[] = 'Аккаунт заблокирован. Обратитесь к администратору.';
         } else {
             session_regenerate_id(true);
             $_SESSION['user_id'] = (int)$user['id'];

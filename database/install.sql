@@ -11,6 +11,7 @@ CREATE TABLE users (
     email VARCHAR(255) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
     role ENUM('user', 'admin') NOT NULL DEFAULT 'user',
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
@@ -60,6 +61,7 @@ CREATE TABLE transactions (
     description VARCHAR(255) NULL,
     external_id VARCHAR(100) NULL,
     source ENUM('manual', 'csv') NOT NULL DEFAULT 'manual',
+    status ENUM('planned', 'completed', 'cancelled') NOT NULL DEFAULT 'completed',
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_transactions_user
         FOREIGN KEY (user_id) REFERENCES users(id)
@@ -75,6 +77,7 @@ CREATE TABLE transactions (
         ON UPDATE CASCADE,
     CONSTRAINT chk_transactions_amount CHECK (amount > 0),
     INDEX idx_transactions_user_date (user_id, transaction_date),
+    INDEX idx_transactions_status_date (status, transaction_date),
     INDEX idx_transactions_category_date (category_id, transaction_date),
     INDEX idx_transactions_import_batch (import_batch_id),
     INDEX idx_transactions_external_id (external_id)
@@ -176,6 +179,9 @@ INSERT INTO transactions (id, user_id, category_id, import_batch_id, type, amoun
 (11, 2, 11, 1, 'expense', 18000.00, '2026-09-05', 'Банк: аренда', 'BANK-003', 'csv'),
 (12, 2, 12, 1, 'expense', 2400.00, '2026-09-07', 'Банк: развлечения', 'BANK-004', 'csv'),
 (13, 2, 13, 1, 'expense', 950.00, '2026-09-09', 'Банк: аптека', 'BANK-005', 'csv');
+
+UPDATE transactions SET status='planned' WHERE id IN (2, 5, 8);
+UPDATE transactions SET status='cancelled' WHERE id=6;
 
 INSERT INTO budgets (id, user_id, year, month, amount) VALUES
 (1, 1, 2026, 9, 50000.00),

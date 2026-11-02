@@ -18,7 +18,7 @@ $user = require_auth();
     <nav>
       <a class="active" href="dashboard.php">Главная</a>
       <a href="transactions.php">Операции</a>
-      <?php if (($user['role'] ?? 'user') === 'admin'): ?><a href="admin-transactions.php">Администрирование</a><?php endif; ?>
+      <?php if (($user['role'] ?? 'user') === 'admin'): ?><a href="admin-transactions.php">Администрирование</a><a href="admin-users.php">Пользователи</a><?php endif; ?>
     </nav>
   </aside>
   <main class="main">
