@@ -35,7 +35,7 @@ $categoryStmt->execute(['user_id' => (int)$user['id']]);
 $categories = $categoryStmt->fetchAll();
 ?>
 <!doctype html>
-<html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Операции — FinanceAssistant</title><link rel="stylesheet" href="auth.css"></head>
+<html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Операции — FinanceAssistant</title><link rel="stylesheet" href="vendor/bootstrap.min.css"><link rel="stylesheet" href="auth.css"></head>
 <body><div class="dashboard">
   <aside class="sidebar"><div class="logo"><div class="logo-mark">₽</div>FinanceAssistant</div><nav><a href="dashboard.php">Личный кабинет</a><a class="active" href="transactions.php">Операции</a><?php if (($user['role'] ?? 'user') === 'admin'): ?><a href="admin-transactions.php">Администрирование</a><?php endif; ?><a href="logout.php">Выйти</a></nav></aside>
   <main class="main"><div class="topbar"><div><h1>Мои операции</h1><p>Детали доступны только владельцу записи и администратору.</p></div><a class="action-link" href="dashboard.php">← В кабинет</a></div>
@@ -47,7 +47,7 @@ $categories = $categoryStmt->fetchAll();
       <div class="field"><label for="to">Дата по</label><input id="to" name="to" type="date" value="<?= e($dateTo) ?>"></div>
       <div class="filter-actions"><button class="btn" type="submit">Найти</button><a href="transactions.php">Сбросить</a></div>
     </form>
-    <section class="panel"><h2>Найдено: <?= count($transactions) ?></h2><div class="table-wrap"><table><thead><tr><th>Дата</th><th>Тип</th><th>Категория</th><th>Сумма</th><th>Описание</th><th></th></tr></thead><tbody>
+    <section class="panel"><h2>Найдено: <?= count($transactions) ?></h2><div class="table-wrap"><table class="table table-hover align-middle mb-0"><thead><tr><th>Дата</th><th>Тип</th><th>Категория</th><th>Сумма</th><th>Описание</th><th></th></tr></thead><tbody>
     <?php foreach ($transactions as $transaction): ?><tr><td><?= e(date('d.m.Y', strtotime($transaction['transaction_date']))) ?></td><td><?= $transaction['type'] === 'income' ? 'Доход' : 'Расход' ?></td><td><?= e($transaction['category']) ?></td><td><?= e(number_format((float)$transaction['amount'], 2, ',', ' ')) ?> ₽</td><td><?= e($transaction['description'] ?? '—') ?></td><td><a href="transaction.php?id=<?= (int)$transaction['id'] ?>">Подробнее</a></td></tr><?php endforeach; ?>
     <?php if (!$transactions): ?><tr><td colspan="6" class="empty">Операций по заданным условиям нет.</td></tr><?php endif; ?></tbody></table></div></section>
   </main></div></body></html>

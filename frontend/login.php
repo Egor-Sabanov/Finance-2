@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Вход — FinanceAssistant</title>
-  <link rel="stylesheet" href="auth.css">
+  <link rel="stylesheet" href="vendor/bootstrap.min.css"><link rel="stylesheet" href="auth.css">
 </head>
 <body>
 <div class="auth-shell">
