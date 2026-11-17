@@ -1,5 +1,12 @@
 :root {
   color-scheme: dark;
+  --bs-body-color: #edf4ff;
+  --bs-body-bg: #090e18;
+  --bs-emphasis-color: #edf4ff;
+  --bs-secondary-color: #91a1ba;
+  --bs-border-color: rgba(149, 170, 205, .16);
+  --bs-link-color: #7c8cff;
+  --bs-link-hover-color: #aeb8ff;
   --bg: #090e18;
   --panel: rgba(17, 25, 40, .88);
   --panel-strong: #121c2d;
@@ -194,6 +201,7 @@ td select, .user-actions select {
 .filter-actions .btn { width: auto; white-space: nowrap; }
 .filter-actions a { color: var(--muted); font-size: 14px; }
 .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 13px; }
+.table { --bs-table-color: #dbe5f4; --bs-table-bg: transparent; --bs-table-border-color: var(--line); --bs-table-hover-color: var(--text); --bs-table-hover-bg: rgba(124, 140, 255, .055); margin-bottom: 0; }
 table { width: 100%; min-width: 760px; margin: 0; border-collapse: collapse; }
 th, td { padding: 13px 12px; border-bottom: 1px solid var(--line); color: #dbe5f4; text-align: left; vertical-align: middle; }
 th { color: #9cabc2; background: rgba(255, 255, 255, .025); font-size: 12px; font-weight: 700; letter-spacing: .035em; text-transform: uppercase; white-space: nowrap; }
