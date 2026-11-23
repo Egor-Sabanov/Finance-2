@@ -76,7 +76,9 @@ CREATE TABLE transactions (
         ON DELETE SET NULL
         ON UPDATE CASCADE,
     CONSTRAINT chk_transactions_amount CHECK (amount > 0),
-    INDEX idx_transactions_user_date (user_id, transaction_date),
+    INDEX idx_transactions_user_date_id (user_id, transaction_date, id),
+    INDEX idx_transactions_user_period_summary (user_id, status, type, transaction_date, amount),
+    INDEX idx_transactions_user_category_period (user_id, category_id, status, type, transaction_date, amount),
     INDEX idx_transactions_status_date (status, transaction_date),
     INDEX idx_transactions_category_date (category_id, transaction_date),
     INDEX idx_transactions_import_batch (import_batch_id),

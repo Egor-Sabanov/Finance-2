@@ -3,11 +3,11 @@ erDiagram
     USERS ||--o{ TRANSACTIONS : creates
     USERS ||--o{ IMPORT_BATCHES : uploads
     USERS ||--o{ BUDGETS : plans
-    BUDGETS ||--o{ BUDGET_LIMITS : contains
+    USERS ||--o{ NOTIFICATIONS : receives
     CATEGORIES ||--o{ TRANSACTIONS : classifies
     CATEGORIES ||--o{ BUDGET_LIMITS : limits
     IMPORT_BATCHES ||--o{ TRANSACTIONS : imports
-    USERS ||--o{ NOTIFICATIONS : receives
+    BUDGETS ||--o{ BUDGET_LIMITS : contains
     BUDGET_LIMITS ||--o{ NOTIFICATIONS : triggers
 
     USERS {
@@ -15,12 +15,14 @@ erDiagram
         varchar full_name
         varchar email UK
         varchar password_hash
+        enum role
+        boolean is_active
         timestamp created_at
         timestamp updated_at
     }
     CATEGORIES {
         bigint id PK
-        bigint user_id FK
+        bigint user_id FK "nullable for shared categories"
         varchar name
         enum type
         char color
@@ -31,20 +33,21 @@ erDiagram
         bigint id PK
         bigint user_id FK
         bigint category_id FK
-        bigint import_batch_id FK
+        bigint import_batch_id FK "nullable"
         enum type
         decimal amount
         date transaction_date
         varchar description
         varchar external_id
         enum source
+        enum status
         timestamp created_at
     }
     IMPORT_BATCHES {
         bigint id PK
         bigint user_id FK
         varchar file_name
-        char file_hash UK
+        char file_hash
         enum status
         int rows_total
         int rows_imported
@@ -73,7 +76,7 @@ erDiagram
     NOTIFICATIONS {
         bigint id PK
         bigint user_id FK
-        bigint budget_limit_id FK
+        bigint budget_limit_id FK "nullable"
         enum type
         varchar title
         varchar message
@@ -81,3 +84,8 @@ erDiagram
         timestamp created_at
         timestamp read_at
     }
+
+%% Composite transaction indexes:
+%% (user_id, transaction_date, id)
+%% (user_id, status, type, transaction_date, amount)
+%% (user_id, category_id, status, type, transaction_date, amount)

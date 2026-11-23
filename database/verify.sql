@@ -42,3 +42,27 @@ SELECT
 FROM budgets b
 LEFT JOIN budget_limits bl ON bl.budget_id = b.id
 GROUP BY b.id, b.year, b.month, b.amount;
+
+-- Составные индексы для бюджета, лимитов и постраничного списка.
+SHOW INDEX FROM transactions WHERE Key_name LIKE 'idx_transactions_user%';
+
+-- Проверка сводного запроса по месяцу.
+EXPLAIN
+SELECT COALESCE(SUM(amount), 0) AS spent
+FROM transactions
+WHERE user_id = 2
+  AND status = 'completed'
+  AND type = 'expense'
+  AND transaction_date >= '2026-09-01'
+  AND transaction_date < '2026-10-01';
+
+-- Проверка расчета лимита по категории.
+EXPLAIN
+SELECT COALESCE(SUM(amount), 0) AS spent
+FROM transactions
+WHERE user_id = 2
+  AND category_id = 9
+  AND status = 'completed'
+  AND type = 'expense'
+  AND transaction_date >= '2026-09-01'
+  AND transaction_date < '2026-10-01';
