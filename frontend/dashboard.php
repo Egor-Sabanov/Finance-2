@@ -19,6 +19,7 @@ $user = require_auth();
       <a class="active" href="dashboard.php">Главная</a>
       <a href="transactions.php">Операции</a>
       <a href="budget.php">Бюджет</a>
+      <a href="currency.php">Конвертер валют</a>
       <?php if (($user['role'] ?? 'user') === 'admin'): ?><a href="admin-transactions.php">Администрирование</a><a href="admin-users.php">Пользователи</a><?php endif; ?>
     </nav>
   </aside>
@@ -43,6 +44,7 @@ $user = require_auth();
       <p>Просматривайте операции, ищите по описанию и категории и отбирайте записи по датам и типу.</p>
       <a class="action-link" href="transactions.php">Открыть список операций →</a>
       <a class="action-link" href="budget.php">Планировать бюджет →</a>
+      <a class="action-link" href="currency.php">Открыть конвертер валют →</a>
       <?php if (($user['role'] ?? 'user') === 'admin'): ?><a class="action-link" href="admin-transactions.php">Открыть список всех записей →</a><?php endif; ?>
     </section>
   </main>

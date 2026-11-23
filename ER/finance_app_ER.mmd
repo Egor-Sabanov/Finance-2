@@ -84,6 +84,13 @@ erDiagram
         timestamp created_at
         timestamp read_at
     }
+    EXCHANGE_RATES {
+        char currency_code PK
+        decimal rate_rub
+        decimal nominal
+        date rate_date
+        timestamp fetched_at
+    }
 
 %% Composite transaction indexes:
 %% (user_id, transaction_date, id)

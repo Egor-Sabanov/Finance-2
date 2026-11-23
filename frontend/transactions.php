@@ -74,7 +74,7 @@ unset($query['page']);
     <nav>
       <a href="dashboard.php">Личный кабинет</a>
       <a class="active" href="transactions.php">Операции</a>
-      <a href="budget.php">Бюджет</a>
+      <a href="budget.php">Бюджет</a><a href="currency.php">Конвертер валют</a>
       <?php if (($user['role'] ?? 'user') === 'admin'): ?>
         <a href="admin-transactions.php">Администрирование</a>
         <a href="admin-users.php">Пользователи</a>

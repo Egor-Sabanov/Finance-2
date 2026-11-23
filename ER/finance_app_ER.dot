@@ -10,6 +10,7 @@ digraph finance_app {
   budgets [label="budgets\nid · user_id · year · month · amount"];
   budget_limits [label="budget_limits\nid · budget_id · category_id\nlimit_amount · warning_percent"];
   notifications [label="notifications\nid · user_id · budget_limit_id\ntype · title · message · is_read"];
+  exchange_rates [label="exchange_rates\nPK: currency_code\nrate_rub · nominal · rate_date · fetched_at\nIDX: fetched_at"];
 
   users -> categories [label="1 : N"];
   users -> transactions [label="1 : N"];

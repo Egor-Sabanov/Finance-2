@@ -9,6 +9,9 @@ UNION ALL SELECT 'import_batches', COUNT(*) FROM import_batches
 UNION ALL SELECT 'budgets', COUNT(*) FROM budgets
 UNION ALL SELECT 'budget_limits', COUNT(*) FROM budget_limits
 UNION ALL SELECT 'notifications', COUNT(*) FROM notifications;
+SELECT currency_code, rate_rub, nominal, rate_date, fetched_at
+FROM exchange_rates
+ORDER BY currency_code;
 
 SELECT
     t.id,

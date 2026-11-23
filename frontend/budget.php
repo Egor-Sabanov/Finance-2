@@ -196,7 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (db()->inTransaction()) {
                 db()->rollBack();
             }
-            error_log('Budget action failed: ' . $error->getMessage());
+            app_log_error($error);
             set_flash('error', 'Не удалось сохранить бюджет. Проверьте данные и попробуйте еще раз.');
         }
 
@@ -286,6 +286,7 @@ function money(float $value): string
       <a href="dashboard.php">Главная</a>
       <a href="transactions.php">Операции</a>
       <a class="active" href="budget.php">Бюджет</a>
+      <a href="currency.php">Конвертер валют</a>
       <?php if (($user['role'] ?? 'user') === 'admin'): ?>
         <a href="admin-transactions.php">Администрирование</a>
         <a href="admin-users.php">Пользователи</a>

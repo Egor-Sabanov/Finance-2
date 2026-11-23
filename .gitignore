@@ -1,0 +1,3 @@
+/var/logs/*.log
+/var/cache/*
+!/var/cache/.gitkeep
